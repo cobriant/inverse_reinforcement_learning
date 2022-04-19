@@ -2,12 +2,11 @@
 
 In this repo:
 
-✅ IRL function (lp_irl_function.R))
+✅ IRL function (lp_irl_function.R)
 
-✅ IRL in finite state spaces with a simple example (example1.R)
+✅ [IRL in finite state spaces with a simple example (example1.R)](https://rpubs.com/colleenobriant/irl1)
 
-✅ IRL in large state spaces (example2.R)
-
+✅ [IRL in large state spaces (example2.R)](https://rpubs.com/colleenobriant/irl2)
 
 Coming soon:
 
