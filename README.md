@@ -2,15 +2,14 @@
 
 In this repo:
 
-✅ IRL in finite state spaces (lp_irl_function.R)
+✅ IRL function (lp_irl_function.R))
 
-✅ Simple example (example1.R)
+✅ IRL in finite state spaces with a simple example (example1.R)
+
+✅ IRL in large state spaces (example2.R)
 
 
 Coming soon:
 
-🚧 IRL in large state spaces
-
 🚧 IRL from sampled trajectories
-
 

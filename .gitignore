@@ -2,6 +2,7 @@
 .Rhistory
 .Rapp.history
 *.html
+misc.R
 
 # Session Data files
 .RData

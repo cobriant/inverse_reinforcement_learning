@@ -106,7 +106,14 @@ lp_irl <- function(p_ssa, optimal_policy, beta, R_max) {
     const.rhs = B_mat 
   )
   
-  sol$solution
+  value_function <- solve(
+    diag(n) - beta * p_a1
+    ) %*% matrix(sol$solution[(n + 1):(2*n)], nrow = n)
+  
+  return(list(reward_function = sol$solution[(n + 1):(2*n)],
+              value_function = value_function,
+              cost_singlestep_deviation = sol$solution[1:n]
+  ))
 }
 
 

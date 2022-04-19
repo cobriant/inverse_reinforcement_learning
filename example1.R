@@ -21,7 +21,7 @@ p_ssa <- array(
   dim = c(2, 2, 3)
 ) # action 1: stay; action 2: randomize; action 3: switch
 
-p_ssa
+print(p_ssa)
 
 #' State 1 is preferable to state 2 because state 1 earns the agent higher 
 #' rewards. IRL will calculate the reward function, but we need to put an upper
@@ -32,9 +32,9 @@ Rmax <- 10
 #' you're in state 1 and switch if you're in state 2. This keeps you in state
 #' 1 as much as possible.
 optimal_p <- c(1, 3)
-#' Under the optimal policy, the transition probability matrix is $p_{a1}$:
+#' Under the optimal policy, the transition probability matrix is $p_{a_1}$:
 p_a1 <- rbind(p_ssa[1, , optimal_p[1]], p_ssa[2, , optimal_p[2]])
-p_a1
+print(p_a1)
 
 n <- dim(p_ssa)[1] # Number of states i = 1, ..., N
 k <- dim(p_ssa)[3] # Number of actions a = 1, ..., K
@@ -91,7 +91,7 @@ sol <- lpSolve::lp(
   const.rhs = B_mat
 )
 
-sol$solution
+print(sol$solution)
 
 #' Interpretation:
 #' 
@@ -99,7 +99,7 @@ sol$solution
 #' period 1 takes on state i, and then acting according to the optimal policy
 #' from then on out.
 
-sol$solution[1:2]
+print(sol$solution[1:2])
 
 #' That is, suppose the initial state is 1, and you choose to randomize instead
 #' of staying. Then your expected payoff in the next period is 5 instead of 10.
@@ -109,10 +109,10 @@ sol$solution[1:2]
 #'
 #' The reward function is:
 
-sol$solution[3:4]
+print(sol$solution[3:4])
 
-#' That is, R(1) = 10 (= R_max) and R(2) = 0 (= R_min). It is verified that
-#' state 1 is preferable to state 2.
+#' That is, R(1) = 10 ($= R_{max}$) and R(2) = 0 ($= R_{min}$). It is verified 
+#' that state 1 is preferable to state 2.
 #' 
 #' Also, we can find $V^\pi(s_1) = E[R(s_1) + \beta R(s_2) + \beta^2 R(s_3) + ... | \pi]$
 #' $= (I - \beta P_{a_1})^{-1} R$
@@ -124,12 +124,18 @@ solve(diag(2) - .9 * p_a1) %*% matrix(c(10, 0), nrow = 2)
 #' Take the initial state as 1. Then the agent receives 10 in state 1 and can
 #' continue to get 10 each period after that by acting in accordance with the
 #' optimal policy. So $V^\pi(1) = E[10 + \beta 10 + \beta^2 10 + ... ]$.
-#' Solve this infinite sum by noting that for $\beta = .9$, $.9 V = V - 10$,
-#' so $10 = .1 V$ and $V(1) = 100$.
+#' Solve this infinite sum by noting that for $\beta = .9$, 
+#' 
+#' $.9 V(1) = V(1) - 10$,
+#' 
+#' so $10 = .1 V(1)$ and $V(1) = 100$.
 #' 
 #' Take the initial state as 2. Then the agent receives 0 in state 1 but can
 #' continue to get 10 each period after that by acting in accordance with the
 #' optimal policy. So $V^\pi(2) = E[\beta 10 + \beta^2 10 + ... ]$.
-#' Solve this infinite sum by noting that for $\beta = .9$, $.9 V = V - 9$,
-#' so $9 = .1 V$ and $V(2) = 90$.
+#' Solve this infinite sum by noting that for $\beta = .9$, 
+#' 
+#' $.9 V(2) = V(2) - 9$,
+#' 
+#' so $9 = .1 V(2)$ and $V(2) = 90$.
 #' 
