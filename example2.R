@@ -99,6 +99,11 @@ for (i in 1:21) {
     (s0 %in% possible_s2 / (length(possible_s2)*2))
 }
 
+# Verify that rows of p_ssa sum to 1:
+expect_setequal(rowSums(p_ssa[, , 1]), 1)
+expect_setequal(rowSums(p_ssa[, , 2]), 1)
+expect_setequal(rowSums(p_ssa[, , 3]), 1)
+
 #' Optimal policy:
 #' 
 #' If s < 0, stay. If s >= 0, switch.
@@ -129,10 +134,12 @@ R <- function(s) {
     dnorm(s, mean = -.1, sd = 2/22)
 }
 
-tibble(x = seq(-1, 1, length = 100), y = R(x)) %>%
+tibble(x = seq(-1, 1, length = 100), 
+       y = R(x)) %>%
   ggplot(aes(x = x, y = y)) +
   geom_line() +
-  ggtitle("Reward Function")
+  geom_point(data = tibble(x = s0, y = sol$reward_function*10), aes(x = s0, y = y)) +
+  ggtitle("Continuous vs Discrete Reward Function")
 
 #' 
 #' The cost of a single-step deviation from the optimal policy is highest at 
